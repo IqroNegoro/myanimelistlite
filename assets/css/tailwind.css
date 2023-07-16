@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .remove-scrollbar::-webkit-scrollbar {
+        @apply w-0 h-0;
+    }
+}
