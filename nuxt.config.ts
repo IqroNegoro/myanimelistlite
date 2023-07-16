@@ -19,5 +19,6 @@ export default defineNuxtConfig({
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css'
   },
-  css: ["assets/boxicons/css/boxicons.css"]
+  css: ["assets/boxicons/css/boxicons.css"],
+  ssr: false
 })
