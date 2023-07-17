@@ -9,24 +9,16 @@
                 </NuxtLink>
             </div>
         </div>
-        <div class="w-full p-4 text-white font-semibold text-2xl mt-8">
+        <!-- <div class="w-full p-4 text-white font-semibold text-2xl mt-8">
             Recommendation Anime
             <div class="w-full grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar" v-if="!pendingRecommendations" @mousedown="useDraggable">
                 <Recommendations v-for="recommendations in recommendationsAnime" :key="recommendations.mal_id" :recommendations="recommendations" />
             </div>
-            <div v-else class="w-64 flex flex-col animate-pulse">
-                <img class="w-full h-full rounded-sm">
-                <h1 class="text-lg truncate mx-1"></h1>
-            </div>
-        </div>
+        </div> -->
         <div class="w-full p-4 text-white font-semibold text-2xl mt-8">
             Top Anime
             <div class="w-full grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar" v-if="!pendingTop" @mousedown="useDraggable">
                 <TopAnime v-for="top in topAnime" :key="top.mal_id" :top="top" />
-            </div>
-            <div v-else class="w-64 flex flex-col animate-pulse">
-                <img class="w-full h-full rounded-sm">
-                <h1 class="text-lg truncate mx-1"></h1>
             </div>
         </div>
         <div class="w-full p-4 text-white font-semibold text-2xl mt-8">
@@ -34,38 +26,21 @@
             <div class="w-full grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar" v-if="!pendingSeasonNow" @mousedown="useDraggable">
                 <SeasonAnime v-for="season in animeSeasonNow" :key="season.mal_id" :season="season" />
             </div>
-            <div v-else class="w-64 flex flex-col animate-pulse">
-                <img class="w-full h-full rounded-sm">
-                <h1 class="text-lg truncate mx-1"></h1>
-            </div>
         </div>
     </div>
 </template>
 <script setup>
-const runtime = useRuntimeConfig();
-const {data: recommendationsAnime, pendingRecommendations} = await useFetch(`${runtime.public.apiURL}recommendations/anime`, {
-    transform: ({data}) => {
-        let array = [];
-        for (let x of data.slice(0,5)) {
-            array.push(...x.entry)
-        }
-
-        return array;
-    }
-});
-
-const {data: topAnime, pendingTop} = await useFetch(`${runtime.public.apiURL}top/anime`, {
-    transform: res => res.data
-});
-
-const {data: animeSeasonNow, pendingSeasonNow} = await useFetch(`${runtime.public.apiURL}seasons/now?limit=25`, {
-    transform: res => {
-        console.log(res)
-        return res.data;
-    },
-});
-console.log(animeSeasonNow.value)
+// const { recommendationsAnime, pendingRecommendations } = await getRecommendationsAnime();
+const { topAnime, pendingTop } = await getTopAnime();
+const { animeSeasonNow, pendingSeasonNow } = await getAnimeSeason();
 useHead({
-    title: "My Anime List Lite"
+    title: "My Anime List Lite",
+    meta: [
+        {
+            name: 'keywords', content: 'My Anime List Lite',
+            name: 'description', content: 'My Anime List Lite',
+            name: 'author', content: 'Iqro Negoro',
+        }
+    ]
 })
 </script>
