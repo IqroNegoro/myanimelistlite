@@ -1,11 +1,8 @@
 export default e => {
-    e.stopPropagation();
-    e.preventDefault();
     let target = e.currentTarget;
     target.style.userSelect = 'none';
     let left = 0;
     let posX = 0;
-
     const handleMoveMouse = ({clientX: x}) => {
         target.scrollLeft = left - (x - posX)
     }

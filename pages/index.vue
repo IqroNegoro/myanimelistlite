@@ -24,6 +24,8 @@
     </div>
 </template>
 <script setup>
+const loading = useLoading();
+loading.value = true;
 const { topAnime, pendingTop } = await getTopAnime();
 const { animeSeasonNow, pendingSeasonNow } = await getAnimeSeason();
 useHead({
@@ -36,4 +38,5 @@ useHead({
         }
     ]
 })
+loading.value = false;
 </script>

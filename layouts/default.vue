@@ -7,5 +7,4 @@
 </template>
 <script setup>
 const loading = useLoading();
-console.log(loading.value)
 </script>

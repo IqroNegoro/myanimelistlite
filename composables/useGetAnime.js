@@ -51,3 +51,14 @@ export const getEpisodesById = async id => {
 
     return { episodes };
 }
+
+export const getAnimeCharacters = async id => {
+    const { data: characters } = await useApi(`anime/${id}/characters`, {
+        transform: res => {
+            let { data } = res;
+            data.forEach(v => v.voice_actors = v.voice_actors.filter(v => v.language == 'Japanese')[0])
+            return data;
+        }
+    })
+    return { characters }
+}

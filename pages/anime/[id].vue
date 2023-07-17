@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="w-full h-screen bg-top bg-no-repeat bg-cover flex items-center px-10 md:px-20" :style="`background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('${anime.images.webp.large_image_url}')`" id="header">
+        <div class="w-full h-screen bg-top bg-no-repeat bg-cover flex items-center px-10 md:px-20" :style="`background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('${episodes[episodes.length - 1]?.images.jpg.image_url ?? anime.images.webp.large_image_url}')`" id="header">
             <div class="w-full flex flex-col md:flex-row justify-start md:justify-evenly items-center gap-4">
                 <div>
                     <img :src="anime.images.webp.large_image_url" :alt="anime.title" class="rounded-sm w-96 mx-auto md:w-full">
@@ -35,6 +35,15 @@
                 <h1 class="text-center">This anime episodes airied yet</h1>
             </div>
         </div>
+        <div class="px-3 py-1">
+            <p class="text-xl font-semibold">Characters</p>
+            <div class="w-full grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable" v-if="characters">
+                <Characters v-for="character in characters" :key="character.character.mal_id" :character="character" />
+            </div>
+            <div v-else>
+                <h1 class="text-center">This anime characters has not available</h1>
+            </div>
+        </div>
     </div>
 </template>
 <script setup>
@@ -43,7 +52,9 @@ loading.value = true;
 const {id} = useRoute().params;
 const { anime, pendingAnimeId } = await getAnimeById(id);
 const { episodes } = await getEpisodesById(id);
+const { characters } = await getAnimeCharacters(id);
 console.log(episodes.value)
+console.log(characters.value)
 useHead({
     title: anime.value.title,
     meta: [
