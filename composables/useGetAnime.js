@@ -37,9 +37,17 @@ export const getAnimeSeason = async () => {
 }
 
 export const getAnimeById = async id => {
-    const { data, pendingAnimeId } = await useApi(`anime/${id}/full`, {
+    const { data: anime, pendingAnimeId } = await useApi(`anime/${id}/full`, {
         transform: res => res.data
     })
 
-    return { data, pendingAnimeId }
+    return { anime, pendingAnimeId }
+}
+
+export const getEpisodesById = async id => {
+    const { data: episodes } = await useApi(`anime/${id}/videos/episodes`, {
+        transform: res => res.data.reverse()
+    });
+
+    return { episodes };
 }

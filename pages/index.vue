@@ -9,12 +9,6 @@
                 </NuxtLink>
             </div>
         </div>
-        <!-- <div class="w-full p-4 text-white font-semibold text-2xl mt-8">
-            Recommendation Anime
-            <div class="w-full grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar" v-if="!pendingRecommendations" @mousedown="useDraggable">
-                <Recommendations v-for="recommendations in recommendationsAnime" :key="recommendations.mal_id" :recommendations="recommendations" />
-            </div>
-        </div> -->
         <div class="w-full p-4 text-white font-semibold text-2xl mt-8">
             Top Anime
             <div class="w-full grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar" v-if="!pendingTop" @mousedown="useDraggable">
@@ -30,7 +24,6 @@
     </div>
 </template>
 <script setup>
-// const { recommendationsAnime, pendingRecommendations } = await getRecommendationsAnime();
 const { topAnime, pendingTop } = await getTopAnime();
 const { animeSeasonNow, pendingSeasonNow } = await getAnimeSeason();
 useHead({
