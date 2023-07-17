@@ -2,6 +2,7 @@ export default e => {
     e.stopPropagation();
     e.preventDefault();
     let target = e.currentTarget;
+    target.style.userSelect = 'none';
     let left = 0;
     let posX = 0;
 
@@ -16,7 +17,6 @@ export default e => {
 
     left = target.scrollLeft;
     posX = e.clientX;
-    target.style.userSelect = 'none';
     document.addEventListener("mousemove", handleMoveMouse)
     document.addEventListener("mouseup", removeGrabScroll)
 }

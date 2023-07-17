@@ -28,8 +28,11 @@
         </div>
         <div class="px-3 py-1">
             <p class="text-xl font-semibold">Episodes</p>
-            <div class="w-full grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable">
-                <Episodes v-for="episode in episodes" :key="episode.mal_id" :episode="episode" />
+            <div class="w-full grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable" v-if="episodes">
+                <Episodes v-for="episode in episodes" :key="episode.mal_id" :episode="episode" :nullImage="anime.images.webp.large_image_url" />
+            </div>
+            <div v-else>
+                <h1 class="text-center">This anime episodes airied yet</h1>
             </div>
         </div>
     </div>
