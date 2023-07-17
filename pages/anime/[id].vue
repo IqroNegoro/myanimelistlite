@@ -6,7 +6,7 @@
                     <img :src="data.images.webp.large_image_url" :alt="data.title" class="rounded-sm">
                 </div>
                 <div>
-                    <h1 class="text-white text-lg font-bold">{{ data.title }}</h1>
+                    <h1 class="text-white text-center lg:text-2xl text-xl font-bold">{{ data.title }}</h1>
                     <p class="text-center text-white">{{data.title_japanese}}</p>
                     <div class="text-white text-center">
                         <i class="bx bx-heart"></i>
