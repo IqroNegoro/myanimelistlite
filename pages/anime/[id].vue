@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="anime">
         <div class="w-full h-screen bg-top bg-no-repeat bg-cover flex items-center px-10 md:px-20" :style="`background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('${episodes[episodes.length - 1]?.images.jpg.image_url ?? anime.images.webp.large_image_url}')`" id="header">
             <div class="w-full flex flex-col md:flex-row justify-start md:justify-evenly items-center gap-4">
                 <div>
@@ -17,9 +17,21 @@
                         {{ anime.score }} ({{ anime.scored_by }})
                     </div>
                     <div class="text-white text-center">
-                        {{ capitalizeFirst(anime.season) }} &bull; {{ anime.year }} &bull; {{ anime.studios[0].name }}
+                        {{ anime.season ? capitalizeFirst(anime.season) : 'Upcoming' }} &bull; {{ anime.year ?? 'Upcoming' }} &bull; {{ anime.studios[0].name }}
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="px-3 my-4">
+            <p class="text-xl font-semibold">Trailer</p>
+            <button class="w-full md:w-1/4 relative group/overlay aspect-video" @click="showTrailer = true">
+                <div class="group/player absolute hidden group-hover/overlay:flex bg-black bg-opacity-50 w-full h-full top-0 left-0 justify-center items-center">
+                    <i class="bx bx-play text-7xl transition-all duration-150 opacity-0 translate-y-4 group-hover/player:opacity-100 group-hover/player:translate-y-0"></i>
+                </div>
+                <img v-if="anime.trailer.images.maximum_image_url" :src="anime.trailer.images.maximum_image_url" :alt="anime.title" class="w-full h-full rounded-sm" draggable="false" loading="lazy">
+            </button>
+            <div class="fixed top-0 left-0 bg-black bg-opacity-50 w-full h-screen z-10 flex justify-center items-center" v-if="showTrailer" @click="showTrailer = false">
+                <iframe src="https://www.youtube.com/embed/c5bkocwVqu0?enablejsapi=1&wmode=opaque&autoplay=1" frameborder="0" class="aspect-video w-full md:w-3/4"></iframe>
             </div>
         </div>
         <div class="px-3 py-1">
@@ -28,7 +40,7 @@
         </div>
         <div class="px-3 py-1">
             <p class="text-xl font-semibold">Episodes</p>
-            <div class="max-w-fit grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable" v-if="episodes">
+            <div class="max-w-fit grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable" v-if="episodes.length">
                 <Episodes v-for="episode in episodes" :key="episode.mal_id" :episode="episode" :nullImage="anime.images.webp.large_image_url" />
             </div>
             <div v-else>
@@ -37,7 +49,7 @@
         </div>
         <div class="px-3 py-1">
             <p class="text-xl font-semibold">Characters</p>
-            <div class="max-w-fit grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable" v-if="characters">
+            <div class="max-w-fit grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable" v-if="characters.length">
                 <Characters v-for="character in characters" :key="character.character.mal_id" :character="character" />
             </div>
             <div v-else>
@@ -46,7 +58,7 @@
         </div>
         <div class="px-3 py-1">
             <p class="text-xl font-semibold">Reviews</p>
-            <div v-if="reviews" class="p-2 flex flex-col gap-4">
+            <div v-if="reviews.length" class="p-2 flex flex-col gap-4">
                 <Reviews v-for="review in reviews" :key="review.mal_id" :review="review" />
             </div>
             <div v-else>
@@ -63,9 +75,11 @@ const { anime } = await getAnimeById(id);
 const { episodes } = await getEpisodesById(id);
 const { characters } = await getAnimeCharacters(id);
 const { reviews } = await getAnimeReviews(id);
+console.log(anime.value)
 console.log(episodes.value)
 console.log(characters.value)
 console.log(reviews.value)
+const showTrailer = ref(false);
 useHead({
     title: anime.value.title,
     meta: [

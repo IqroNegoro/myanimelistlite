@@ -3,8 +3,8 @@
         <img :src="review.user.images.webp.image_url" :alt="review.user.username" class="w-12 h-max">
         <div class="w-full">
             <div class="flex justify-between items-center">
-                <NuxtLink class="font-semibold text-md">{{review.user.username}}</NuxtLink>
-                <p>{{new Intl.DateTimeFormat("en-US", {
+                <NuxtLink class="font-semibold text-sm md:text-lg">{{review.user.username}}</NuxtLink>
+                <p class="text-sm md:text-lg">{{new Intl.DateTimeFormat("en-US", {
                     weekday: 'long',
                     year: 'numeric',
                     month: 'long',
