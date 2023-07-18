@@ -17,6 +17,7 @@
     "vue": "latest"
   },
   "dependencies": {
+    "@nuxtjs/moment": "^1.6.1",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@pinia/nuxt": "^0.4.11",
     "pinia": "^2.1.4"

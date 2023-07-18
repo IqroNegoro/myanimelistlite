@@ -28,7 +28,7 @@
         </div>
         <div class="px-3 py-1">
             <p class="text-xl font-semibold">Episodes</p>
-            <div class="w-full grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable" v-if="episodes">
+            <div class="max-w-fit grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable" v-if="episodes">
                 <Episodes v-for="episode in episodes" :key="episode.mal_id" :episode="episode" :nullImage="anime.images.webp.large_image_url" />
             </div>
             <div v-else>
@@ -37,11 +37,20 @@
         </div>
         <div class="px-3 py-1">
             <p class="text-xl font-semibold">Characters</p>
-            <div class="w-full grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable" v-if="characters">
+            <div class="max-w-fit grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable" v-if="characters">
                 <Characters v-for="character in characters" :key="character.character.mal_id" :character="character" />
             </div>
             <div v-else>
                 <h1 class="text-center">This anime characters has not available</h1>
+            </div>
+        </div>
+        <div class="px-3 py-1">
+            <p class="text-xl font-semibold">Reviews</p>
+            <div v-if="reviews" class="p-2 flex flex-col gap-4">
+                <Reviews v-for="review in reviews" :key="review.mal_id" :review="review" />
+            </div>
+            <div v-else>
+                <h1 class="text-center">This anime reviews has not available</h1>
             </div>
         </div>
     </div>
@@ -49,12 +58,14 @@
 <script setup>
 const loading = useLoading();
 loading.value = true;
-const {id} = useRoute().params;
-const { anime, pendingAnimeId } = await getAnimeById(id);
+const { id } = useRoute().params;
+const { anime } = await getAnimeById(id);
 const { episodes } = await getEpisodesById(id);
 const { characters } = await getAnimeCharacters(id);
+const { reviews } = await getAnimeReviews(id);
 console.log(episodes.value)
 console.log(characters.value)
+console.log(reviews.value)
 useHead({
     title: anime.value.title,
     meta: [
@@ -79,6 +90,5 @@ useSeoMeta({
     twitterImageType: 'image/jpeg',
     twitterImageAlt: anime.value.title,
 })
-console.log(anime.value)
 loading.value = false;
 </script>
