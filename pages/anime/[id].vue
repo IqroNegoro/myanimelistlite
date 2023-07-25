@@ -13,11 +13,12 @@
                     <div class="text-white text-center">
                         <i class="bx bx-heart"></i>
                         {{ anime.favorites }}
+                        #{{ anime.rank }}
                         <i class="bx bx-star"></i>
                         {{ anime.score }} ({{ anime.scored_by }})
                     </div>
                     <div class="text-white text-center">
-                        {{ anime.season ? capitalizeFirst(anime.season) : 'Upcoming' }} &bull; {{ anime.year ?? 'Upcoming' }} &bull; {{ anime.studios[0].name }}
+                        {{ anime.season ? capitalizeFirst(anime.season) : '?' }} &bull; {{ anime.year ?? '?' }} &bull; {{ anime.studios[0].name }}
                     </div>
                 </div>
             </div>
@@ -34,6 +35,135 @@
                 <iframe :src="anime.trailer?.embed_url" frameborder="0" class="aspect-video w-full md:w-3/4"></iframe>
             </div>
         </div>
+        <div class="px-3 my-4">
+            <p class="text-xl font-semibold">Information</p>
+            <table class="">
+                <tbody>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Score</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg align-bottom">{{anime.score}} (Scored By {{ anime.scored_by }} Users)</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Ranked</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg align-bottom">#{{anime.rank}}</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Popularity</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg align-bottom">#{{anime.popularity}}</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Members</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg align-bottom">{{anime.members}} Users</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Favorites</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg align-bottom">{{anime.favorites}} Users</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Type</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg align-bottom">{{anime.type}}</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Total Episode</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg align-bottom">{{anime.episodes}}</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Duration</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg">{{anime.duration}}</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Status</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg align-bottom">{{anime.status}}</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Aired</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg align-bottom">{{anime.aired.string}}</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Rating</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg align-bottom">{{anime.rating}}</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Broadcast</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg align-bottom">{{anime.broadcast.string}}</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Producers</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg" v-if="anime.producers?.length">
+                            <NuxtLink v-for="(producer, index) in anime.producers" :to="`/producer/${producer.mal_id}`" :key="producer.mal_id">{{producer.name}}{{ index != anime.producers?.length - 1 ? ", " : "" }}</NuxtLink>
+                        </td>
+                        <td v-else>
+                            None
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Licensors</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg" v-if="anime.licensors?.length">
+                            <NuxtLink v-for="(licensor, index) in anime.licensors" :to="`/licensor/${licensor.mal_id}`" :key="licensor.mal_id">{{licensor.name}}{{ index != anime.licensors?.length - 1 ? ", " : "" }}</NuxtLink>
+                        </td>
+                        <td v-else>
+                            None
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Studio</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg" v-if="anime.studios?.length">
+                            <NuxtLink v-for="(studio, index) in anime.studios" :to="`/studio/${studio.mal_id}`" :key="studio.mal_id">{{studio.name}}{{ index != anime.studios?.length - 1 ? ", " : "" }}</NuxtLink>
+                        </td>
+                        <td v-else>
+                            None
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Source</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg">{{anime.source}}</td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Genres</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg" v-if="anime.genres?.length">
+                            <NuxtLink v-for="(genre, index) in anime.genres" :to="`/genre/${genre.mal_id}`" :key="genre.mal_id">{{genre.name}}{{ index != anime.genres?.length - 1 ? ", " : "" }}</NuxtLink>
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Themes</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg" v-if="anime.themes?.length">
+                            <NuxtLink v-for="(theme, index) in anime.themes" :to="`/genre/${theme.mal_id}`" :key="theme.mal_id">{{theme.name}}{{ index != anime.themes?.length - 1 ? ", " : "" }}</NuxtLink>
+                        </td>
+                        <td v-else>
+                            None
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Demographic</th>
+                        <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
+                        <td class="text-md md:text-lg" v-if="anime.demographics?.length">
+                            <NuxtLink v-for="(demographic, index) in anime.demographics" :to="`/genre/${demographic.mal_id}`" :key="demographic.mal_id">{{demographic.name}}{{ index != anime.demographics?.length - 1 ? ", " : "" }}</NuxtLink>
+                        </td>
+                        <td v-else>
+                            None
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="px-3 py-1">
             <p class="text-xl font-semibold">Synopsis</p>
             <p class="whitespace-pre-line text-sm">{{anime.synopsis}}</p>
@@ -44,7 +174,7 @@
                 <Episodes v-for="episode in episodes" :key="episode.mal_id" :episode="episode" :nullImage="anime.images.webp.large_image_url" />
             </div>
             <div v-else>
-                <h1 class="text-center">This anime episodes airied yet</h1>
+                <h1 class="text-center">This anime episodes not airied yet</h1>
             </div>
         </div>
         <div class="px-3 py-1">
@@ -57,15 +187,21 @@
             </div>
         </div>
         <div class="px-3 py-1">
-            <p class="text-xl font-semibold">Reviews</p>
-            <div v-if="reviews.length" class="p-2 flex flex-col gap-4">
+            <div class="flex justify-between items-center">
+                <p class="text-xl font-semibold">Reviews</p>
+                <NuxtLink to="">More Reviews</NuxtLink>
+            </div>
+            <div v-if="reviews == null" class="w-full">
+                <button class="mx-auto block px-2 py-1 font-semibold bg-blue-500 rounded-sm" @click="loadReviews">See Reviews</button>
+            </div>
+            <div v-else-if="reviews.length" class="p-2 flex flex-col gap-4">
                 <Reviews v-for="review in reviews" :key="review.mal_id" :review="review" />
             </div>
-            <!-- <div v-else-if="reviews.length == 0">
-                <h1 class="text-center">This anime reviews has not available</h1>
-            </div> -->
-            <div v-else class="w-full">
-                <button class="mx-auto block px-2 py-1 font-semibold bg-blue-500 rounded-sm" @click="loadReviews">See Reviews</button>
+            <div v-else>
+                <h1 class="text-center">There no reviews yet</h1>
+            </div>
+            <div v-if="pendingReviews">
+                <img src="/img/kuru.gif" alt="loading..." class="w-32 mx-auto">
             </div>
         </div>
     </div>
@@ -77,11 +213,16 @@ const { id } = useRoute().params;
 const { anime } = await getAnimeById(id);
 const { episodes } = await getEpisodesById(id);
 const { characters } = await getAnimeCharacters(id);
-let reviews = ref([]);
+let reviews = ref(null);
+let pendingReviews = ref(false);
 const loadReviews = async () => {
-    let data = await getAnimeReviews(id);
-    reviews.value = data.reviews.value
+    pendingReviews.value = true;
+    let {reviews: data} = await getAnimeReviews(id);
+    console.log(data.value)
+    reviews.value = data.value
+    pendingReviews.value = false;
 }
+console.log(anime)
 const showTrailer = ref(false);
 useHead({
     title: anime.value.title,
