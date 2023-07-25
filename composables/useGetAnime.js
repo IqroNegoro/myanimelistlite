@@ -67,6 +67,5 @@ export const getAnimeReviews = async id => {
     const { data: reviews } = await useApi(`anime/${id}/reviews`, {
         transform: res => res.data.slice(0,3)
     })
-
     return { reviews }
 }
