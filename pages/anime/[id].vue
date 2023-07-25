@@ -25,14 +25,17 @@
         </div>
         <div class="px-3 my-4">
             <p class="text-xl font-semibold">Trailer</p>
-            <button class="w-full md:w-1/4 relative group/overlay aspect-video" @click="showTrailer = true">
-                <div class="group/player absolute hidden group-hover/overlay:flex bg-black bg-opacity-50 w-full h-full top-0 left-0 justify-center items-center">
-                    <i class="bx bx-play text-7xl transition-all duration-150 opacity-0 translate-y-4 group-hover/player:opacity-100 group-hover/player:translate-y-0"></i>
+            <p v-if="!anime.trailer.embed_url">There's no trailer</p>
+            <div v-else>
+                <button class="w-full md:w-1/4 relative group/overlay aspect-video" @click="showTrailer = true">
+                    <div class="group/player absolute hidden group-hover/overlay:flex bg-black bg-opacity-50 w-full h-full top-0 left-0 justify-center items-center">
+                        <i class="bx bx-play text-7xl transition-all duration-150 opacity-0 translate-y-4 group-hover/player:opacity-100 group-hover/player:translate-y-0"></i>
+                    </div>
+                    <img v-if="anime.trailer?.images?.maximum_image_url" :src="anime.trailer?.images?.maximum_image_url" :alt="anime.title" class="w-full h-full rounded-sm" draggable="false" loading="lazy">
+                </button>
+                <div class="fixed top-0 left-0 bg-black bg-opacity-50 w-full h-screen z-10 flex justify-center items-center" v-if="showTrailer" @click="showTrailer = false">
+                    <iframe :src="anime.trailer?.embed_url" frameborder="0" class="aspect-video w-full md:w-3/4"></iframe>
                 </div>
-                <img v-if="anime.trailer?.images?.maximum_image_url" :src="anime.trailer?.images?.maximum_image_url" :alt="anime.title" class="w-full h-full rounded-sm" draggable="false" loading="lazy">
-            </button>
-            <div class="fixed top-0 left-0 bg-black bg-opacity-50 w-full h-screen z-10 flex justify-center items-center" v-if="showTrailer" @click="showTrailer = false">
-                <iframe :src="anime.trailer?.embed_url" frameborder="0" class="aspect-video w-full md:w-3/4"></iframe>
             </div>
         </div>
         <div class="px-3 my-4">
@@ -103,7 +106,7 @@
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Producers</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
                         <td class="text-md md:text-lg" v-if="anime.producers?.length">
-                            <NuxtLink v-for="(producer, index) in anime.producers" :to="`/producer/${producer.mal_id}`" :key="producer.mal_id">{{producer.name}}{{ index != anime.producers?.length - 1 ? ", " : "" }}</NuxtLink>
+                            <NuxtLink v-for="(producer, index) in anime.producers" :to="producer.url" :key="producer.mal_id">{{producer.name}}{{ index != anime.producers?.length - 1 ? ", " : "" }}</NuxtLink>
                         </td>
                         <td v-else>
                             None
@@ -113,7 +116,7 @@
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Licensors</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
                         <td class="text-md md:text-lg" v-if="anime.licensors?.length">
-                            <NuxtLink v-for="(licensor, index) in anime.licensors" :to="`/licensor/${licensor.mal_id}`" :key="licensor.mal_id">{{licensor.name}}{{ index != anime.licensors?.length - 1 ? ", " : "" }}</NuxtLink>
+                            <NuxtLink v-for="(licensor, index) in anime.licensors" :to="licensor.url" :key="licensor.mal_id">{{licensor.name}}{{ index != anime.licensors?.length - 1 ? ", " : "" }}</NuxtLink>
                         </td>
                         <td v-else>
                             None
@@ -123,7 +126,7 @@
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Studio</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
                         <td class="text-md md:text-lg" v-if="anime.studios?.length">
-                            <NuxtLink v-for="(studio, index) in anime.studios" :to="`/studio/${studio.mal_id}`" :key="studio.mal_id">{{studio.name}}{{ index != anime.studios?.length - 1 ? ", " : "" }}</NuxtLink>
+                            <NuxtLink v-for="(studio, index) in anime.studios" :to="studio.url" :key="studio.mal_id">{{studio.name}}{{ index != anime.studios?.length - 1 ? ", " : "" }}</NuxtLink>
                         </td>
                         <td v-else>
                             None
@@ -138,14 +141,14 @@
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Genres</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
                         <td class="text-md md:text-lg" v-if="anime.genres?.length">
-                            <NuxtLink v-for="(genre, index) in anime.genres" :to="`/genre/${genre.mal_id}`" :key="genre.mal_id">{{genre.name}}{{ index != anime.genres?.length - 1 ? ", " : "" }}</NuxtLink>
+                            <NuxtLink v-for="(genre, index) in anime.genres" :to="genre.url" :key="genre.mal_id">{{genre.name}}{{ index != anime.genres?.length - 1 ? ", " : "" }}</NuxtLink>
                         </td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Themes</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
                         <td class="text-md md:text-lg" v-if="anime.themes?.length">
-                            <NuxtLink v-for="(theme, index) in anime.themes" :to="`/genre/${theme.mal_id}`" :key="theme.mal_id">{{theme.name}}{{ index != anime.themes?.length - 1 ? ", " : "" }}</NuxtLink>
+                            <NuxtLink v-for="(theme, index) in anime.themes" :to="theme.url" :key="theme.mal_id">{{theme.name}}{{ index != anime.themes?.length - 1 ? ", " : "" }}</NuxtLink>
                         </td>
                         <td v-else>
                             None
@@ -155,7 +158,7 @@
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Demographic</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
                         <td class="text-md md:text-lg" v-if="anime.demographics?.length">
-                            <NuxtLink v-for="(demographic, index) in anime.demographics" :to="`/genre/${demographic.mal_id}`" :key="demographic.mal_id">{{demographic.name}}{{ index != anime.demographics?.length - 1 ? ", " : "" }}</NuxtLink>
+                            <NuxtLink v-for="(demographic, index) in anime.demographics" :to="demographic.url" :key="demographic.mal_id">{{demographic.name}}{{ index != anime.demographics?.length - 1 ? ", " : "" }}</NuxtLink>
                         </td>
                         <td v-else>
                             None
@@ -191,6 +194,9 @@
                 <p class="text-xl font-semibold">Reviews</p>
                 <NuxtLink to="">More Reviews</NuxtLink>
             </div>
+            <div v-if="pendingReviews">
+                <img src="/img/kuru.gif" alt="loading..." class="w-32 mx-auto">
+            </div>
             <div v-if="reviews == null" class="w-full">
                 <button class="mx-auto block px-2 py-1 font-semibold bg-blue-500 rounded-sm" @click="loadReviews">See Reviews</button>
             </div>
@@ -199,9 +205,6 @@
             </div>
             <div v-else>
                 <h1 class="text-center">There no reviews yet</h1>
-            </div>
-            <div v-if="pendingReviews">
-                <img src="/img/kuru.gif" alt="loading..." class="w-32 mx-auto">
             </div>
         </div>
     </div>

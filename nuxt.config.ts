@@ -10,6 +10,11 @@ export default defineNuxtConfig({
       ]
     }
   },
+  routeRules: {
+    "/": {
+      swr: 600
+    },
+  },
   modules: [
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
