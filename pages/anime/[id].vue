@@ -189,18 +189,19 @@
                 <h1 class="text-center">This anime characters has not available</h1>
             </div>
         </div>
-        <div class="px-3 py-1">
+        <div class="px-3 py-1 loadscroll">
             <div class="flex justify-between items-center">
-                <p class="text-xl font-semibold">Reviews</p>
+                <p ref="reviewsDiv" class="text-xl font-semibold">Reviews</p>
                 <NuxtLink to="">More Reviews</NuxtLink>
             </div>
             <div v-if="pendingReviews">
                 <img src="/img/kuru.gif" alt="loading..." class="w-32 mx-auto">
             </div>
-            <div v-if="reviews == null" class="w-full">
-                <button class="mx-auto block px-2 py-1 font-semibold bg-blue-500 rounded-sm" @click="loadReviews">See Reviews</button>
+            <div v-if="errorReviews" class="w-full">
+                <p class="text-center">Seem Something Wrong</p>
+                <button class="mx-auto block px-2 py-1 font-semibold bg-blue-500 rounded-sm" @click="refreshReviews">Try Again</button>
             </div>
-            <div v-else-if="reviews.length" class="p-2 flex flex-col gap-4">
+            <div v-if="reviews" class="p-2 flex flex-col gap-4">
                 <Reviews v-for="review in reviews" :key="review.mal_id" :review="review" />
             </div>
             <div v-else>
@@ -216,17 +217,20 @@ const { id } = useRoute().params;
 const { anime } = await getAnimeById(id);
 const { episodes } = await getEpisodesById(id);
 const { characters } = await getAnimeCharacters(id);
-let reviews = ref(null);
-let pendingReviews = ref(false);
-const loadReviews = async () => {
-    pendingReviews.value = true;
-    let {reviews: data} = await getAnimeReviews(id);
-    console.log(data.value)
-    reviews.value = data.value
-    pendingReviews.value = false;
-}
-console.log(anime)
+const { reviews, pending: pendingReviews, error: errorReviews, execute: refreshReviews} = await getAnimeReviews(id);
+
 const showTrailer = ref(false);
+
+const reviewsDiv = ref(null);
+
+onMounted(() => {
+    useScrollFetch([reviewsDiv.value], async entries => {
+        if (entries.target == reviewsDiv.value) {
+            await refreshReviews();
+        }
+    })
+})
+
 useHead({
     title: anime.value.title,
     meta: [

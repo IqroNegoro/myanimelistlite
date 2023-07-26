@@ -27,6 +27,7 @@
 const loading = useLoading();
 loading.value = true;
 const { topAnime, pendingTop } = await getTopAnime();
+console.log(topAnime.value)
 const { animeSeasonNow, pendingSeasonNow } = await getAnimeSeason();
 useHead({
     title: "My Anime List Lite",

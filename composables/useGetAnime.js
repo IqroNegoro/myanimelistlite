@@ -18,7 +18,7 @@
 // }
     
 export const getTopAnime = async () => {
-    const {data: topAnime, pendingTop} = await useApi(`top/anime`, {
+    const {data: topAnime, pendingTop, error, refresh} = await useApi(`top/anime`, {
         transform: res => res.data
     });
 
@@ -64,8 +64,10 @@ export const getAnimeCharacters = async id => {
 }
 
 export const getAnimeReviews = async id => {
-    const { data: reviews } = await useApi(`anime/${id}/reviews`, {
-        transform: res => res.data.slice(0,3)
+    const { data: reviews, pending, error, execute } = await useApi(`anime/${id}/reviews`, {
+        transform: res => res.data.slice(0,3),
+        immediate: false
     })
-    return { reviews }
+
+    return { reviews, pending, error, execute}
 }
