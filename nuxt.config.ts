@@ -11,6 +11,12 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
+    "/": {
+      swr: 3600
+    },
+    "anime/**": {
+      swr: 3600
+    }
   },
   modules: [
     "@nuxtjs/tailwindcss",

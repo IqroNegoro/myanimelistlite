@@ -202,10 +202,10 @@
                 <button class="mx-auto block px-2 py-1 font-semibold bg-blue-500 rounded-sm" @click="refreshReviews">Try Again</button>
             </div>
             <div v-if="reviews" class="p-2 flex flex-col gap-4">
-                <Reviews v-for="review in reviews" :key="review.mal_id" :review="review" />
-            </div>
-            <div v-else>
-                <h1 class="text-center">There no reviews yet</h1>
+                <div v-if="!reviews.length">
+                    <h1 class="text-center">There no reviews yet</h1>
+                </div>
+                <Reviews v-else v-for="review in reviews" :key="review.mal_id" :review="review" />
             </div>
         </div>
     </div>
@@ -222,7 +222,7 @@ const { reviews, pending: pendingReviews, error: errorReviews, execute: refreshR
 const showTrailer = ref(false);
 
 const reviewsDiv = ref(null);
-
+console.log(anime.value)
 onMounted(() => {
     useScrollFetch([reviewsDiv.value], async entries => {
         if (entries.target == reviewsDiv.value) {
