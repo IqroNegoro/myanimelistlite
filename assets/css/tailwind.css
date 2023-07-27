@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
 @layer components {
     .remove-scrollbar::-webkit-scrollbar {
         @apply w-0 h-0;

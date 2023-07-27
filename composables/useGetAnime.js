@@ -71,3 +71,14 @@ export const getAnimeReviews = async id => {
 
     return { reviews, pending, error, execute}
 }
+
+export const searchAnime = async q => {
+    const { data, pending, error, refresh } = await useApi(`anime`, {
+        params: {
+            q,
+            sfw: '',
+        }
+    });
+    
+    return { data, pending, error, refresh }
+}

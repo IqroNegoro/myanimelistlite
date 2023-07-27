@@ -1,7 +1,7 @@
 <template>
     <div class="w-full min-h-screen bg-black text-white">
         <Loading v-if="loading" />
-        <!-- <Navbar /> -->
+        <Navbar />
         <slot />
     </div>
 </template>
