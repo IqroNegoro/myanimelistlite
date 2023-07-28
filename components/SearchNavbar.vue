@@ -43,7 +43,7 @@ const handleSearch = async () => {
     await navigateTo({  
         path: "/search",
         query: {
-            q: searchInput.value
+            q: searchInput.value,
         },
         replace: true
     })
