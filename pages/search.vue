@@ -1,20 +1,33 @@
 <template>
-    <div class="pt-16 px-4">
-        <div class="flex justify-between items-center pr-4">
-            <h1 class="text-3xl font-bold">Search for {{searchQuery.q}}</h1>
-            <NuxtLink v-if="hasNextPage?.current_page > 1" :to="`/${useRoute().name}?q=${searchQuery.q}&page=${hasNextPage?.current_page - 1}`" class="font-semibold">
-                Previous
-            </NuxtLink>
-            <NuxtLink v-if="hasNextPage?.has_next_page" :to="`/${useRoute().name}?q=${searchQuery.q}&page=${hasNextPage?.current_page + 1}`" class="font-semibold">
-                Next
-            </NuxtLink>
+    <div class="pt-16 px-4" v-if="search">
+        <div class="flex justify-between items-center pr-4 mb-4">
+            <h1 class="text-3xl font-bold">Search for {{q}} {{page ? `Page ${page}` : ''}}</h1>
+            <div class="flex gap-4">
+                <NuxtLink v-if="search.pagination.current_page > 1" :to="{path: '/search', query: {q, page: parseInt(page) - 1}}" class="font-semibold">
+                    <i class="bx bx-chevron-left text-2xl"></i>
+                </NuxtLink>
+                <NuxtLink v-if="search.pagination.has_next_page" :to="{path: '/search', query: {q, page: parseInt(page) + 1}}" class="font-semibold">
+                    <i class="bx bx-chevron-right text-2xl"></i>
+                </NuxtLink>
+            </div>
         </div>
-        <div v-if="!searchQuery.q" class="flex justify-center items-center flex-col">
+        <div v-if="!q" class="flex justify-center items-center flex-col">
             <img src="/img/kuru.gif" alt="Loading..." class="w-36">
             <h1>Gk ketemu nih!</h1>
         </div>
-        <div v-else-if="search.length" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 grid-flow-row gap-2">
-            <SearchAnime v-for="anime in search" :key="anime.mal_id" :anime="anime" />
+        <div v-else-if="search.data.length == 0" class="flex justify-center items-center flex-col">
+            <img src="/img/kuru.gif" alt="Loading..." class="w-36">
+            <h1>Kosong Nih</h1>
+        </div>
+        <div v-else-if="search.data.length" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 grid-flow-row gap-2">
+            <SearchAnime v-for="anime in search.data" :key="anime.mal_id" :anime="anime" />
+        </div>
+        <div v-else-if="error">
+            <img src="/img/kuru.gif" alt="Loading..." class="w-36">
+            <h1>Ada yang salah nih! balik ke rumah yaa~</h1>
+            <NuxtLink to="/" class="px-2 py-1 bg-blue-500">
+                Home
+            </NuxtLink>
         </div>
         <div v-else class="flex justify-center items-center">
             <img src="/img/kuru.gif" alt="Loading...">
@@ -22,19 +35,30 @@
     </div>
 </template>
 <script setup>
-const searchQuery = computed(() => useRoute().query);
-const search = ref([]);
-const hasNextPage = ref(null);
-watch(() => searchQuery.value, async () => {
-    console.log('eksekusi gk nih')
-    if (searchQuery.value.q) {
-        const { data } = await searchAnime(searchQuery.value.q, {
-            page: searchQuery.value.page ?? 1
-        })
-        search.value = data.value.data;
-        hasNextPage.value = data.value.pagination
+const loading = useLoading();
+loading.value = true;
+const route = computed(() => useRoute());
+const q = computed(() => route.value.query.q);
+const page = computed(() => route.value.query.page);
+const { data: search, error } = await searchAnime({
+    query: {
+        q,
+        page
     }
-}, {
-    immediate: true
 })
+useHead({
+    title: `Search For ${q.value}`
+})
+useSeoMeta({
+    title: `Search For ${q.value}`,
+    description: 'Search your anime in mallite now!',
+    ogDescription: 'Search your anime in mallite now!',
+    ogTitle: `Search for ${q.value}`,
+    applicationName: 'My search List Lite',
+    ogType: 'website',
+    twitterCard: 'app',
+    twitterTitle: `Search For ${q.value}`,
+    twitterDescription: 'Search your anime in mallite now!',
+})
+loading.value = false;
 </script>

@@ -18,7 +18,7 @@
                         {{ anime.score }} ({{ anime.scored_by }})
                     </div>
                     <div class="text-white text-center">
-                        {{ anime.season ? capitalizeFirst(anime.season) : '?' }} &bull; {{ anime.year ?? '?' }} &bull; {{ anime.studios[0].name }}
+                        {{ anime.season ? capitalizeFirst(anime.season) : '?' }} &bull; {{ anime.year ?? '?' }} &bull; {{ anime.studios[0]?.name ?? '?' }}
                     </div>
                 </div>
             </div>

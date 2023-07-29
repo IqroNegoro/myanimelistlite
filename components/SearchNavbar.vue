@@ -44,6 +44,7 @@ const handleSearch = async () => {
         path: "/search",
         query: {
             q: searchInput.value,
+            page: 1
         },
         replace: true
     })
