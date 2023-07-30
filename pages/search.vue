@@ -48,7 +48,9 @@ const page = computed(() => route.value.query.page);
 const { data: search, error } = await searchAnime({
     query: {
         q,
-        page
+        page,
+        sfw: '',
+        order_by: 'rank'
     }
 })
 if (!q.value || page.value == 0) {

@@ -16,8 +16,8 @@
                 <span :class="{'text-red-500': tag == 'Not Recommended', 'text-blue-500': tag == 'Recommended', 'text-green-500': tag == 'Mixed Feelings'}">{{tag}}</span>
             </div>
             <div class="line-clamp-6 relative review" :id="review.mal_id">
-                <p class="text-sm whitespace-pre-line"> {{ review.review }} </p>
-                <div v-if="!showLess" class="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-b from-transparent to-black"></div>
+                <p class="text-sm whitespace-pre-line" @click="handleOverflowing"> {{ review.review }} </p>
+                <div v-if="isOverflowing && !showLess" class="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-b from-transparent to-black"></div>
             </div>
             <button v-if="isOverflowing" @click="handleOverflowing">
                 <i class="bx bx-chevron-up text-2xl" v-if="showLess"></i>
@@ -41,6 +41,7 @@ onMounted(() => {
     reviewContainer = document.getElementById(props.review.mal_id);
     if (reviewContainer.clientHeight < reviewContainer.scrollHeight) {
         isOverflowing.value = true;
+        console.log("aku overflow")
     }
 })
 </script>

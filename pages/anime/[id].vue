@@ -32,6 +32,7 @@
                         <i class="bx bx-play text-7xl transition-all duration-150 opacity-0 translate-y-4 group-hover/player:opacity-100 group-hover/player:translate-y-0"></i>
                     </div>
                     <img v-if="anime.trailer?.images?.maximum_image_url" :src="anime.trailer?.images?.maximum_image_url" :alt="anime.title" class="w-full h-full rounded-sm" draggable="false" loading="lazy">
+                    <img v-else src="/img/kuru.gif" alt="Loading..." class="w-full h-full rounded-sm" draggable="false" loading="lazy">
                 </button>
                 <div class="fixed top-0 left-0 bg-black bg-opacity-50 w-full h-screen z-10 flex justify-center items-center" v-if="showTrailer" @click="showTrailer = false">
                     <iframe :src="anime.trailer?.embed_url" frameborder="0" class="aspect-video w-full md:w-3/4"></iframe>
@@ -215,7 +216,6 @@ const loading = useLoading();
 loading.value = true;
 const { id } = useRoute().params;
 const { anime } = await getAnimeById(id);
-console.log(anime.value)
 if (!anime.value) {
     throw createError({statusCode: 404, message: "The Page Doesnt Exists!"})
 }

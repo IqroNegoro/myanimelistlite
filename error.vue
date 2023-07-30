@@ -6,6 +6,7 @@
             {{ error.statusCode }}
         </p>
         <h1 v-if="error.statusCode == 404">Aduh gk ketemu nih! balik ke home yuk~</h1>
+        <h1 v-if="error.statusCode == 500">Ada yang salah nih kayaknya! balik ke home yuk~</h1>
         <NuxtLink to="/" class="px-2 py-1 rounded-sm bg-red-500 mt-4">
             Home
         </NuxtLink>
