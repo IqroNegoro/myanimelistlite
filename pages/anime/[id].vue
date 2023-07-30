@@ -3,19 +3,19 @@
         <div class="w-full h-screen bg-top bg-no-repeat bg-cover flex items-center px-10 md:px-20" :style="`background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('${episodes[episodes.length - 1]?.images.jpg.image_url ?? anime.images.webp.large_image_url}')`" id="header">
             <div class="w-full flex flex-col md:flex-row justify-start md:justify-evenly items-center gap-4">
                 <div>
-                    <img :src="anime.images.webp.large_image_url" :alt="anime.title" class="rounded-sm w-96 mx-auto md:w-full">
+                    <img :src="anime.images.webp.large_image_url" :alt="anime.title ?? ''" class="rounded-sm w-96 mx-auto md:w-full">
                 </div>
                 <div class="flex justify-center items-center flex-col">
                     <h1 class="text-white text-center lg:text-2xl text-xl font-bold">
-                        <a :href="anime.url" target="_blank">{{ anime.title }}</a>
+                        <a :href="anime.url" target="_blank">{{ anime.title ?? '' }}</a>
                     </h1>
-                    <p class="text-center text-white">{{anime.title_japanese}}</p>
+                    <p class="text-center text-white">{{anime.title_japanese ?? ""}}</p>
                     <div class="text-white text-center">
                         <i class="bx bx-heart"></i>
-                        {{ anime.favorites }}
-                        #{{ anime.rank }}
+                        {{ anime.favorites ?? '' }}
+                        #{{ anime.rank ?? '' }}
                         <i class="bx bx-star"></i>
-                        {{ anime.score }} ({{ anime.scored_by }})
+                        {{ anime.score ?? '' }} ({{ anime.scored_by ?? '' }})
                     </div>
                     <div class="text-white text-center">
                         {{ anime.season ? capitalizeFirst(anime.season) : '?' }} &bull; {{ anime.year ?? '?' }} &bull; {{ anime.studios[0]?.name ?? '?' }}
@@ -45,62 +45,62 @@
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Score</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg align-bottom">{{anime.score}} (Scored By {{ anime.scored_by }} Users)</td>
+                        <td class="text-md md:text-lg align-bottom">{{anime.score ?? 'None'}} (Scored By {{ anime.scored_by  ?? 'None'}} Users)</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Ranked</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg align-bottom">#{{anime.rank}}</td>
+                        <td class="text-md md:text-lg align-bottom">#{{anime.rank ?? 'None'}}</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Popularity</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg align-bottom">#{{anime.popularity}}</td>
+                        <td class="text-md md:text-lg align-bottom">#{{anime.popularity ?? 'None'}}</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Members</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg align-bottom">{{anime.members}} Users</td>
+                        <td class="text-md md:text-lg align-bottom">{{anime.members ?? 'None'}} Users</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Favorites</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg align-bottom">{{anime.favorites}} Users</td>
+                        <td class="text-md md:text-lg align-bottom">{{anime.favorites ?? 'None'}} Users</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Type</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg align-bottom">{{anime.type}}</td>
+                        <td class="text-md md:text-lg align-bottom">{{anime.type ?? 'None'}}</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Total Episode</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg align-bottom">{{anime.episodes}}</td>
+                        <td class="text-md md:text-lg align-bottom">{{anime.episodes ?? 'None'}}</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Duration</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg">{{anime.duration}}</td>
+                        <td class="text-md md:text-lg">{{anime.duration ?? 'None'}}</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Status</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg align-bottom">{{anime.status}}</td>
+                        <td class="text-md md:text-lg align-bottom">{{anime.status ?? 'None'}}</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Aired</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg align-bottom">{{anime.aired.string}}</td>
+                        <td class="text-md md:text-lg align-bottom">{{anime.aired.string ?? 'None'}}</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Rating</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg align-bottom">{{anime.rating}}</td>
+                        <td class="text-md md:text-lg align-bottom">{{anime.rating ?? 'None'}}</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Broadcast</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg align-bottom">{{anime.broadcast.string}}</td>
+                        <td class="text-md md:text-lg align-bottom">{{anime.broadcast.string ?? 'None'}}</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Producers</th>
@@ -135,7 +135,7 @@
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Source</th>
                         <th class="align-top font-semibold">&nbsp;:&nbsp;</th>
-                        <td class="text-md md:text-lg">{{anime.source}}</td>
+                        <td class="text-md md:text-lg">{{anime.source ?? 'Unknown'}}</td>
                     </tr>
                     <tr class="text-left">
                         <th class="align-top font-semibold text-md md:text-lg whitespace-nowrap">Genres</th>
@@ -169,7 +169,7 @@
         </div>
         <div class="px-3 py-1">
             <p class="text-xl font-semibold">Synopsis</p>
-            <p class="whitespace-pre-line text-sm">{{anime.synopsis}}</p>
+            <p class="whitespace-pre-line text-sm">{{anime.synopsis ?? 'Uknown'}}</p>
         </div>
         <div class="px-3 py-1">
             <p class="text-xl font-semibold">Episodes</p>
@@ -215,6 +215,10 @@ const loading = useLoading();
 loading.value = true;
 const { id } = useRoute().params;
 const { anime } = await getAnimeById(id);
+console.log(anime.value)
+if (!anime.value) {
+    throw createError({statusCode: 404, message: "The Page Doesnt Exists!"})
+}
 const { episodes } = await getEpisodesById(id);
 const { characters } = await getAnimeCharacters(id);
 const { reviews, pending: pendingReviews, error: errorReviews, execute: refreshReviews} = await getAnimeReviews(id);
@@ -222,7 +226,6 @@ const { reviews, pending: pendingReviews, error: errorReviews, execute: refreshR
 const showTrailer = ref(false);
 
 const reviewsDiv = ref(null);
-console.log(anime.value)
 onMounted(() => {
     useScrollFetch([reviewsDiv.value], async entries => {
         if (entries.target == reviewsDiv.value) {
