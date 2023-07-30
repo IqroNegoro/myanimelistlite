@@ -48,4 +48,9 @@
 <script setup>
 const showSearch = ref(false);
 const showNav = ref(false);
+
+watch(() => useRoute().fullPath, () => showNav.value = false, {
+    deep: true
+})
+
 </script>
