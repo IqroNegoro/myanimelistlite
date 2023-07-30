@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-screen bg-black pt-20 flex justify-center items-center flex-col text-white">
         <Navbar />
-        <img src="./img/kuru.gif" alt="" class="w-48">
+        <img src="/img/kuru.gif" alt="" class="w-48">
         <p class="font-bold text-3xl">
             {{ error.statusCode }}
         </p>
