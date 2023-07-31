@@ -195,10 +195,10 @@
                 <p ref="reviewsDiv" class="text-xl font-semibold">Reviews</p>
                 <div>
                     <button v-if="reviewPage >= 3" @click="reviewPage = reviewPage - 3">
-                        <i class="bx bx-chevron-left"></i>
+                        <i class="bx bx-chevron-left text-3xl"></i>
                     </button>
                     <button v-if="reviews && reviews.length > 3 && reviews.slice(reviewPage, 4 + reviewPage).length == 4" @click="reviewPage = reviewPage + 3">
-                        <i class="bx bx-chevron-right"></i>
+                        <i class="bx bx-chevron-right text-3xl"></i>
                     </button>
                 </div>
             </div>

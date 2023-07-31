@@ -5,7 +5,6 @@
             <div class="flex justify-between items-center">
                 <NuxtLink class="font-semibold text-sm md:text-lg">{{review.user.username}}</NuxtLink>
                 <p class="text-sm md:text-lg">{{new Intl.DateTimeFormat("en-US", {
-                    weekday: 'long',
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric',
