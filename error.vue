@@ -5,6 +5,7 @@
         <p class="font-bold text-3xl">
             {{ error.statusCode }}
         </p>
+        <p class="text-sm">{{error.message}}</p>
         <h1 v-if="error.statusCode == 404">Aduh gk ketemu nih! balik ke home yuk~</h1>
         <h1 v-if="error.statusCode == 500">Ada yang salah nih kayaknya! balik ke home yuk~</h1>
         <NuxtLink to="/" class="px-2 py-1 rounded-sm bg-red-500 mt-4">

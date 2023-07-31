@@ -174,8 +174,8 @@
         </div>
         <div class="px-3 py-1">
             <p class="text-xl font-semibold">Episodes</p>
-            <div class="max-w-fit grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable" v-if="episodes.length">
-                <Episodes v-for="episode in episodes" :key="episode.mal_id" :episode="episode" :nullImage="anime.images.webp.large_image_url" />
+            <div class="max-w-fit grid grid-flow-col grid-rows-1 gap-8 my-4 overflow-x-auto remove-scrollbar snap-x snap-mandatory" @mousedown="useDraggable" v-if="episodes.episodes.length">
+                <Episodes v-for="episode in episodes.episodes" :key="episode.mal_id" :episode="episode" :nullImage="anime.images.webp.large_image_url" />
             </div>
             <div v-else>
                 <h1 class="text-center">This anime episodes not airied yet</h1>
@@ -220,7 +220,9 @@ if (!anime.value) {
     throw createError({statusCode: 404, message: "The Page Doesnt Exists!"})
 }
 const { episodes } = await getEpisodesById(id);
+console.log(episodes.value)
 const { characters } = await getAnimeCharacters(id);
+console.log(characters.value)
 const { reviews, pending: pendingReviews, error: errorReviews, execute: refreshReviews} = await getAnimeReviews(id);
 
 const showTrailer = ref(false);

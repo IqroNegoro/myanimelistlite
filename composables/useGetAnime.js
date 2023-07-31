@@ -45,8 +45,12 @@ export const getAnimeById = async id => {
 }
 
 export const getEpisodesById = async id => {
-    const { data: episodes } = await useApi(`anime/${id}/videos/episodes`, {
-        transform: res => res.data.reverse()
+    const { data: episodes } = await useApi(`anime/${id}/videos`, {
+        transform: res => {
+            let { data } = res;
+            data.episodes = data.episodes.reverse();
+            return data;
+        }
     });
 
     return { episodes };

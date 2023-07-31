@@ -41,7 +41,6 @@ onMounted(() => {
     reviewContainer = document.getElementById(props.review.mal_id);
     if (reviewContainer.clientHeight < reviewContainer.scrollHeight) {
         isOverflowing.value = true;
-        console.log("aku overflow")
     }
 })
 </script>
