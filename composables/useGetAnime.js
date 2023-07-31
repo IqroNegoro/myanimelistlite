@@ -69,7 +69,7 @@ export const getAnimeCharacters = async id => {
 
 export const getAnimeReviews = async id => {
     const { data: reviews, pending, error, execute } = await useApi(`anime/${id}/reviews`, {
-        transform: res => res.data.slice(0,3),
+        transform: res => res.data,
         immediate: false
     })
 

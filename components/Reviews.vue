@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-row gap-4">
-        <img :src="review.user.images.webp.image_url" :alt="review.user.username" class="w-12 h-max">
+        <img :src="review.user.images?.webp?.image_url" :alt="review.user.username" class="w-12 h-max">
         <div class="w-full">
             <div class="flex justify-between items-center">
                 <NuxtLink class="font-semibold text-sm md:text-lg">{{review.user.username}}</NuxtLink>
@@ -19,15 +19,25 @@
                 <p class="text-sm whitespace-pre-line" @click="handleOverflowing"> {{ review.review }} </p>
                 <div v-if="isOverflowing && !showLess" class="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-b from-transparent to-black"></div>
             </div>
-            <button v-if="isOverflowing" @click="handleOverflowing">
-                <i class="bx bx-chevron-up text-2xl" v-if="showLess"></i>
-                <i class="bx bx-chevron-down text-2xl" v-else></i>
-            </button>
+            <div class="flex justify-between">
+                <button v-if="isOverflowing" @click="handleOverflowing">
+                    <i class="bx bx-chevron-up text-2xl" v-if="showLess"></i>
+                    <i class="bx bx-chevron-down text-2xl" v-else></i>
+                </button>
+                <div>
+                    <i class='bx bx-user'></i>
+                    {{ review.reactions.overall }}
+                    <i class="bx bx-star"></i>
+                    {{ review.score }}
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script setup>
-const props = defineProps(["review"]);
+const props = defineProps({
+    review: Object
+});
 let isOverflowing = ref(false);
 let showLess = ref(false);
 let reviewContainer;

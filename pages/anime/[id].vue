@@ -193,7 +193,14 @@
         <div class="px-3 py-1 loadscroll">
             <div class="flex justify-between items-center">
                 <p ref="reviewsDiv" class="text-xl font-semibold">Reviews</p>
-                <NuxtLink to="">More Reviews</NuxtLink>
+                <div>
+                    <button v-if="reviewPage >= 3" @click="reviewPage = reviewPage - 3">
+                        <i class="bx bx-chevron-left"></i>
+                    </button>
+                    <button v-if="reviews && reviews.length > 3 && reviews.slice(reviewPage, 4 + reviewPage).length == 4" @click="reviewPage = reviewPage + 3">
+                        <i class="bx bx-chevron-right"></i>
+                    </button>
+                </div>
             </div>
             <div v-if="pendingReviews">
                 <img src="/img/kuru.gif" alt="loading..." class="w-32 mx-auto">
@@ -206,7 +213,7 @@
                 <div v-if="!reviews.length">
                     <h1 class="text-center">There no reviews yet</h1>
                 </div>
-                <Reviews v-else v-for="review in reviews" :key="review.mal_id" :review="review" />
+                <Reviews v-else v-for="review in reviews.slice(reviewPage, 3 + reviewPage)" :key="review.mal_id" :review="review" />
             </div>
         </div>
     </div>
@@ -214,15 +221,14 @@
 <script setup>
 const loading = useLoading();
 loading.value = true;
+const reviewPage = ref(0);
 const { id } = useRoute().params;
 const { anime } = await getAnimeById(id);
 if (!anime.value) {
     throw createError({statusCode: 404, message: "The Page Doesnt Exists!"})
 }
 const { episodes } = await getEpisodesById(id);
-console.log(episodes.value)
 const { characters } = await getAnimeCharacters(id);
-console.log(characters.value)
 const { reviews, pending: pendingReviews, error: errorReviews, execute: refreshReviews} = await getAnimeReviews(id);
 
 const showTrailer = ref(false);
