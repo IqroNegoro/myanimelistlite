@@ -1,0 +1,1 @@
+export const capitalize = string => string ? string = string.replace(/^\w/gi, x => x.toUpperCase()) : '';
