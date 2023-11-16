@@ -1,7 +1,7 @@
 <template>
     <div class="w-full max-md:text-xs h-full text-white">
         <img :src="anime.images?.webp?.large_image_url ?? anime.images?.jpg?.large_image_url" alt="" class="w-full h-full object-cover object-center">
-        <div class="absolute p-12 top-0 left-0 flex gap-2 flex-col bg-gradient-to-r from-black/75 to-transparent w-full h-full">
+        <div class="absolute px-14 py-12 top-0 left-0 flex gap-2 flex-col bg-gradient-to-r from-black/75 to-transparent w-full h-full">
             <h1 class="md:text-3xl font-bold"> {{ anime.title }} </h1>
             <p class="text-xs"> {{ anime.title_japanese }} </p>
             <div class="flex items-center gap-1">

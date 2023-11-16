@@ -24,6 +24,10 @@
                         <p v-if="error.data.status == 429">Pelan Pelan Pak Sopir Ngetik nya</p>
                         <img src="/img/error.png" alt="">
                     </div>
+                    <div v-else-if="!animes.length" class="flex flex-col gap-2 justify-center items-center">
+                        <p>Gak ada anime yang ketemu~</p>
+                        <img src="/img/empty.png" alt="" class="w-1/2">
+                    </div>
                     <SearchAnime v-else v-for="anime in animes" :key="anime.mal_id" :anime="anime" />
                     <div ref="fetchPoint"></div>
                 </div>

@@ -3,22 +3,21 @@ export const getAnimes = async () => await useApi(`recommendations/anime`, {
 });
 
 export const getTopAnimes = async () => await useApi(`top/anime`, {
-    default: () => []
+    default: () => [],
+    transform: res => res.data,
+    lazy: true
 });
 
 export const getSeasonNow = async () => await useApi(`seasons/now`, {
-    pick: ["data"],
-    default: () => {}
+    default: () => {},
+    transform: res => res.data,
+    lazy: true
 })
 
 export const getUpcomingSeason = async () => await useApi(`seasons/upcoming`, {
-    pick: ["data"],
-    default: () => {}
-})
-
-export const getAnimeById = async id => await useApi(`anime/${id}`, {
-    pick: ["data"],
-    default: () => {}
+    default: () => {},
+    transform: res => res.data,
+    lazy: true
 })
 
 export const searchAnime = async options => await useApi(`anime`, {
@@ -28,4 +27,14 @@ export const searchAnime = async options => await useApi(`anime`, {
     sort: "desc",
     default: () => {},
     immediate: false
+})
+
+export const getAnimeById = async id => await useApi(`anime/${id}/full`, {
+    default: () => {},
+    transform: res => res.data
+})
+
+export const getAnimeVideos = async id => await useApi(`anime/${id}/videos/episodes`, {
+    default: () => {},
+    transform: res => res.data.reverse()
 })

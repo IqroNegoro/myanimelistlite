@@ -5,6 +5,10 @@
 @tailwind utilities;
 
 @layer base {
+    * {
+        outline: none;
+    }
+    
     ::-webkit-scrollbar {
         @apply h-2 w-1 cursor-pointer
     }

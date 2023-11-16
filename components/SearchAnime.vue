@@ -1,6 +1,5 @@
 <template>
     <NuxtLink :to="{name: 'animes-id', params: {id: anime.mal_id}}" class="flex flex-row gap-2 w-full hover:bg-dark-secondary hover:-translate-y-2 transition-all duration-150 cursor-pointer">
-        <!-- <div class="w-32 h-36 skeleton"></div> -->
         <img :src="anime.images?.webp?.large_image_url" :alt="anime.title" class="w-32 h-36 aspect-[9/16] rounded-sm">
         <div class="flex flex-col p-1 h-full w-full justify-between overflow-hidden">
             <p> {{ anime.title }} </p>
