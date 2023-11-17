@@ -67,8 +67,8 @@ watch(searchedAnime, newVal => {
 })
 
 onMounted(() => {
-    useScroll(fetchPoint.value, () => {
-        if (q.value && searchedAnime.value?.pagination.has_next_page) {
+    useScroll([fetchPoint.value], () => {
+        if (!pending.value && q.value && searchedAnime.value?.pagination.has_next_page) {
             page.value += 1
         }
     })

@@ -2,12 +2,12 @@ export default (ref, cb) => {
     const observer = new IntersectionObserver(entries => {
         entries.forEach(v => {
             if (v.isIntersecting) {
-                cb(entries)
+                cb(v)
             }
         })
     }, {
         threshold: 1,
         rootMargin: "0px"
-    })
-    observer.observe(ref)
+    });
+    ref.forEach(v => observer.observe(v));
 }

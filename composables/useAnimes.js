@@ -38,3 +38,14 @@ export const getAnimeVideos = async id => await useApi(`anime/${id}/videos/episo
     default: () => {},
     transform: res => res.data.reverse()
 })
+
+export const getAnimeCharacters = async id => await useApi(`anime/${id}/characters`, {
+    default: () => {},
+    transform: res => res.data
+})
+
+export const getAnimePictures = async id => await useApi(`anime/${id}/pictures`, {
+    default: () => {},
+    transform: res => res.data,
+    // lazy: true
+})
