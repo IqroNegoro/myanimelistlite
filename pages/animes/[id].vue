@@ -182,6 +182,13 @@
                 <img v-for="(picture, i) in pictures" :key="i" :src="picture.webp?.large_image_url ?? picture.jpg?.large_image_url" class="aspect-auto w-48 object-cover hover:-translate-y-2 transition-all duration-150 rounded-md cursor-pointer" draggable="false" @click="e => selectedPicture = e.target.src">
             </div>
         </div>
+        <div class="text-center px-3">
+            <h1 class="font-semibold text-2xl" id="reviews" ref="reviewsEl">Reviews</h1>
+            <p v-if="!reviews.length" class="my-4">There's no reviews</p>
+            <div v-else class="flex flex-row py-2 overflow-x-auto gap-4">
+                <AnimeReview v-for="review in reviews" :key="review.mal_id" :review="review" />
+            </div>
+        </div>
     </div>
     <div v-if="selectedPicture" class="fixed top-0 left-0 w-full h-full bg-black/75 flex justify-center items-center" @click="selectedPicture = null">
         <img :src="selectedPicture">
@@ -189,6 +196,7 @@
 </template>
 <script setup>
 const galleries = ref(undefined);
+const reviewsEl = ref(undefined);
 const selectedPicture = ref(null);
 
 const { id } = useRoute().params;
@@ -197,11 +205,16 @@ const { data: anime } = await getAnimeById(id);
 const { data: videos } = await getAnimeVideos(id);
 const { data: characters } = await getAnimeCharacters(id);
 const { data: pictures, execute: exePictures } = await getAnimePictures(id);
+const { data: reviews, execute: exeReviews } = await getAnimeReviews(id);
 
 onMounted(() => {
-    useScroll([galleries.value], async entry => {
+    useScroll([galleries.value, reviewsEl.value], async entry => {
         if (entry.target.id == galleries.value.id) {
-            await exePictures()
+            await exePictures();
+        }
+
+        if (entry.target.id == reviewsEl.value.id) {
+            await exeReviews();
         }
     })
 })
