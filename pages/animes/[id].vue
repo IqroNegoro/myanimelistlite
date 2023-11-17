@@ -176,7 +176,7 @@
             </div>
         </div>
         <div class="text-center">
-            <h1 class="font-semibold text-2xl" id="characters">Galleries</h1>
+            <h1 class="font-semibold text-2xl" id="galleries" ref="galleries">Galleries</h1>
             <p v-if="!pictures.length" class="my-4">There's no pictures</p>
             <div v-else class="flex flex-row gap-4 px-4 overflow-y-auto py-2 snap-x snap-proximity">
                 <img v-for="(picture, i) in pictures" :key="i" :src="picture.webp?.large_image_url ?? picture.jpg?.large_image_url" class="aspect-auto w-48 object-cover hover:-translate-y-2 transition-all duration-150 rounded-md cursor-pointer" draggable="false" @click="e => selectedPicture = e.target.src">
@@ -188,6 +188,7 @@
     </div>
 </template>
 <script setup>
+const galleries = ref(undefined);
 const selectedPicture = ref(null);
 
 const { id } = useRoute().params;
@@ -195,9 +196,14 @@ const { id } = useRoute().params;
 const { data: anime } = await getAnimeById(id);
 const { data: videos } = await getAnimeVideos(id);
 const { data: characters } = await getAnimeCharacters(id);
-const { data: pictures } = await getAnimePictures(id);
-console.log(pictures.value)
+const { data: pictures, execute: exePictures } = await getAnimePictures(id);
+
 onMounted(() => {
+    useScroll([galleries.value], async entry => {
+        if (entry.target.id == galleries.value.id) {
+            await exePictures()
+        }
+    })
 })
 
 useHead({

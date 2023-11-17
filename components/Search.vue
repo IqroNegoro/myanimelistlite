@@ -47,13 +47,14 @@ const { data: searchedAnime, pending, error, execute } = await searchAnime({
     params: {
         q,
         limit,
-        page
+        page,
+        sfw: '',
     }
 });
 
 pending.value = false;
 
-watch(q, newVal => {
+watch(q, () => {
     page.value = 1,
     animes.value = [];
 });

@@ -22,9 +22,6 @@ export const getUpcomingSeason = async () => await useApi(`seasons/upcoming`, {
 
 export const searchAnime = async options => await useApi(`anime`, {
     ...options,
-    sfw: true,
-    order_by: "rank",
-    sort: "desc",
     default: () => {},
     immediate: false
 })
@@ -47,5 +44,5 @@ export const getAnimeCharacters = async id => await useApi(`anime/${id}/characte
 export const getAnimePictures = async id => await useApi(`anime/${id}/pictures`, {
     default: () => {},
     transform: res => res.data,
-    // lazy: true
+    lazy: true
 })
