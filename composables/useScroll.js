@@ -3,6 +3,7 @@ export default (ref, cb) => {
         entries.forEach(v => {
             if (v.isIntersecting) {
                 cb(v)
+                observer.unobserve(v.target)
             }
         })
     }, {

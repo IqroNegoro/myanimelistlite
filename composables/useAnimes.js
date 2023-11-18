@@ -52,3 +52,9 @@ export const getAnimeReviews = async id => await useApi(`anime/${id}/reviews`, {
     transform: res => res.data,
     lazy: true
 });
+
+export const getAnimeCharacter = async id => await useApi(`characters/${id}/full`, {
+    default: () => {},
+    transform: res => res.data,
+    lazy: true
+})

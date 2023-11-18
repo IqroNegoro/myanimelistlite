@@ -39,10 +39,13 @@ const { data: seasonAnimes, pending: pendingSeasonAnimes } = await getSeasonNow(
 const { data: upcomingSeason, pending: pendingUpcomingSeason } = await getUpcomingSeason();
 
 useHead({
-    title: "Mallite"
+    title: "Mallite",
 });
 
 useSeoMeta({
-    title: "Mallite"
+    title: "Mallite",
+    description: "Search your anime in mal lite!",
+    ogDescription: "Search your anime in mal lite!",
+    ogImage: "https://static.wikia.nocookie.net/shadows-house-series/images/6/66/Emilico_profile.png/revision/latest?cb=20230319143337",
 });
 </script>
